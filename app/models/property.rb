@@ -3,6 +3,8 @@ class Property < ApplicationRecord
   belongs_to :currency
   belongs_to :user
 
+  has_many :images
+
   validates :property_type, :title, :description, :currency,
             :external_id, :neighborhood, presence: true
   validates :external_id, uniqueness: true
