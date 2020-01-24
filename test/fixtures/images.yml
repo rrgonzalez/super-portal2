@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  url: url-image1
   order: 1
 
 two:
-  name: MyString
-  order: 1
+  url: url-image2
+  order: 2
