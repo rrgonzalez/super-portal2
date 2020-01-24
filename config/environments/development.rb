@@ -58,4 +58,13 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  # .xml Feed Format Url
+  ENV['XML_URL'] = 'http://www.stagingeb.com/feeds/dc3122988c6d81d750eba0825adba94d049f0559/easybroker_MX.xml.gz'
+
+  # Set up logging
+  Rails.logger = ActiveSupport::Logger.new(STDOUT)
+  Rails.logger.formatter = ::Logger::Formatter.new
+  config.logger = ActiveSupport::Logger.new("log/#{Rails.env}.log")
+
 end
