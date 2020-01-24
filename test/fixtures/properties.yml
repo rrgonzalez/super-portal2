@@ -8,3 +8,5 @@ simpson_house:
   sale_price: 550000
   currency: usd
   user: bart
+  external_id: 136r
+  neighborhood: Centro
