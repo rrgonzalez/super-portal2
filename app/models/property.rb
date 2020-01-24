@@ -4,6 +4,7 @@ class Property < ApplicationRecord
   belongs_to :user
 
   has_many :images
+  has_and_belongs_to_many :features
 
   validates :property_type, :title, :description, :currency,
             :external_id, :neighborhood, presence: true

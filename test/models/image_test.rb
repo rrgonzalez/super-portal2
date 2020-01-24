@@ -1,5 +1,3 @@
-require 'test_helper'
-
 class ImageTest < ActiveSupport::TestCase
   test 'create' do
     img = Image.create url: 'http://images.com/image1', order: 54,

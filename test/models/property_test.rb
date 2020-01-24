@@ -68,4 +68,10 @@ class PropertyTest < ActiveSupport::TestCase
     house.rental = true
     assert house.valid?
   end
+
+  test 'relations' do
+    property = Property.new
+    assert_kind_of Array, images
+    assert_kind_of Array, features
+  end
 end

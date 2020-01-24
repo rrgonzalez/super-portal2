@@ -16,4 +16,9 @@ class FeatureTest < ActiveSupport::TestCase
     feature.name = 'Patio'
     assert feature.valid?
   end
+
+  test 'relations' do
+    feature = Feature.new
+    assert_kind_of Array, properties
+  end
 end
