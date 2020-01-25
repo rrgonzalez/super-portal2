@@ -114,6 +114,9 @@ class XmlParser
           aux = currencies[price.attribute('currency').value]
 
           if aux.nil?
+            # Persisted because there are few currencies and they exist independently
+            # from properties, so there is no risk of db inconsistence. !You need
+            # to update relation with Property later.
             aux = Currency.create(code: price.attribute('currency').value)
             currencies[price.attribute('currency').value] = aux
           end
@@ -163,6 +166,9 @@ class XmlParser
         aux = features[feature.content]
 
         if aux.nil?
+          # Persisted because there are few features and they exist independently
+          # from properties, so there is no risk of db inconsistence. !You need
+          # to update relation with Property later.
           aux = Feature.create(name: feature.content)
           features[feature.content] = aux
         end
