@@ -54,6 +54,7 @@ Add any notes here about your design decisions or improvements you would have ma
 * The xml_parser#get_data method could be cleaned. That being said, it's xml parsing it will be ugly anyway. 
 * Due to time limit, I didn't split agent `name` into user `first_name` and `last_name`. It would be a tricky method.
 * xml_parser#complete? method isn't the least complex method you have seen in your life. 
-* There is not been specified a policy to follow during the synchronization process, regarding to the users consulting info during that time. Then, the default database concurrent read/write policy will be maintained.
 * format-parsers directory should go inside synchronizers. I tried to move it there but I got errors, I don't have the time to refactor.
 * If I would have more memory I would cached all db properties on EasyBrokerSynchronizer#do_sync method, so to make just one big read for all properties. I would need to test if I can do that with just 1Gb of memory, since I'm short of time I'll keep it simple and read one property at a time.
+* There is not been specified a policy to follow during the synchronization process, regarding to the users consulting info during that time. I would like to lock all access to database while the synchronization process is on execution, to avoid inconsistent reads, however this is not implemented.
+* If I would have more time, I would try to parse the xml by fragments so to don't keep the whole file at memory since this could break the task, however due to time restriction this is not implemented.
