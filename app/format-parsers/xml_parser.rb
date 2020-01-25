@@ -119,7 +119,7 @@ class XmlParser
             # Persisted because there are few currencies and they exist independently
             # from properties, so there is no risk of db inconsistence. !You need
             # to update relation with Property later.
-            aux = Currency.create(code: price.attribute('currency').value)
+            aux = Currency.new(code: price.attribute('currency').value)
             currencies[price.attribute('currency').value] = aux
           end
 
@@ -168,10 +168,7 @@ class XmlParser
         aux = features[feature.content]
 
         if aux.nil?
-          # Persisted because there are few features and they exist independently
-          # from properties, so there is no risk of db inconsistence. !You need
-          # to update relation with Property later.
-          aux = Feature.create(name: feature.content)
+          aux = Feature.new(name: feature.content)
           features[feature.content] = aux
         end
 
@@ -184,9 +181,6 @@ class XmlParser
       return unless defined? it_prop.images
 
       it_prop.images.children.each_with_index do |image, order|
-        # Just instantiate, not persist Images because its required
-        # to wait to persist it with its property on a single transaction.
-        # Otherwise the database could get to a inconsistent state.
         image_obj = Image.new(url: image.content, order: order)
         property.images.append(image_obj)
       end
@@ -195,9 +189,6 @@ class XmlParser
     def set_user(it_prop, property, company)
       return unless (defined? it_prop.agent) && (defined? it_prop.agent.email)
 
-      # Just instantiate, not persist User because its required
-      # to wait to persist it with its property on a single transaction.
-      # Otherwise the database could get to a inconsistent state.
       user = User.new
       user.email = it_prop.agent.email.content
 
