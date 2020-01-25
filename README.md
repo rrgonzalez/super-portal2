@@ -49,3 +49,9 @@ Add any notes here about your design decisions or improvements you would have ma
 * Could your code easily be refactored to allow a new feed format from another source?
 * If you weren't able to finish what were you able to complete and were you happy with your progress given the time constraints?
 
+* If a property doesn't have all the required fields in the xml I just ignore it. An incomplete property doesn't stop the whole sync process. Completes properties will be taken into account.
+* The XML_URL variable indicates the uri of the xml format feed. It should be setted on the correspondent config/environments/ file.
+* The xml_parser#get_data method could be cleaned. That being said, it's xml parsing it will be ugly anyway. 
+* Due to time limit, I didn't split agent `name` into user `first_name` and `last_name`. It would be a tricky method.
+* xml_parser#complete? method isn't the least complex method you have seen in your life. 
+* There is not been specified a policy to follow during the synchronization process, regarding to the users consulting info during that time. Then, the default database concurrent read/write policy will be maintained.
