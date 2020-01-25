@@ -15,5 +15,7 @@ module SuperPortal
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+
+    config.autoload_paths += %W(#{config.root}/app/synchronizers/cache_loaders)
   end
 end

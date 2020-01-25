@@ -36,9 +36,9 @@ class XmlParser
 
     def get_data(xml_doc)
       begin
-        prop_types = cache_property_types
-        currencies = cache_currencies
-        features = cache_features
+        prop_types = CachePropertyTypes.do_cache
+        currencies = CacheCurrencies.do_cache
+        features = CacheFeatures.do_cache
 
         data = DataFeed.new
         xml_doc.easybroker.agencies.children.each do |agency|
@@ -205,33 +205,6 @@ class XmlParser
       user.phone = it_prop.agent.cell if defined? it_prop.agent.cell
 
       property.user = user
-    end
-
-    def cache_property_types
-      prop_types = Hash.new
-      PropertyType.find_each do |type|
-        prop_types[type.name] = type
-      end
-
-      return prop_types
-    end
-
-    def cache_currencies
-      currencies = Hash.new
-      Currency.find_each do |currency|
-        currencies[currency.code] = currency
-      end
-
-      return currencies
-    end
-
-    def cache_features
-      features = Hash.new
-      Feature.find_each do |feature|
-        features[feature.name] = feature
-      end
-
-      return features
     end
   end
 end
