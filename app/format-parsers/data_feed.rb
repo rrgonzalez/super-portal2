@@ -3,7 +3,5 @@ class DataFeed
 
   def initialize
     @properties = Array.new
-    @users = Array.new
-    @images = Hash.new { |h, k| h[k] = [] }
   end
 end
