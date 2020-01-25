@@ -9,25 +9,27 @@ class XmlParser
   class << self
 
     def parse
-      ## Lock access to this method
 
-      @@logger.info 'STARTED: Downloading XML Feed Format file...'
-      compressed = StringIO.new(open(ENV['XML_URL']).read)
-      @@logger.info 'FINISHED: Downloading XML Feed Format file.'
+      mutex = Mutex.new
+      mutex.synchronize do
 
-      @@logger.info 'STARTED: Decompressing XML Feed Format file...'
-      gz = Zlib::GzipReader.new(compressed)
-      @@logger.info 'FINISHED: Decompressing XML Feed Format file.'
+        @@logger.info 'STARTED: Downloading XML Feed Format file...'
+        compressed = StringIO.new(open(ENV['XML_URL']).read)
+        @@logger.info 'FINISHED: Downloading XML Feed Format file.'
 
-      @@logger.info 'STARTED: Parsing XML Feed Format file...'
-      xml_doc = Nokogiri::Slop(gz.read)
+        @@logger.info 'STARTED: Decompressing XML Feed Format file...'
+        gz = Zlib::GzipReader.new(compressed)
+        @@logger.info 'FINISHED: Decompressing XML Feed Format file.'
 
-      result = get_data(xml_doc)
-      @@logger.info 'FINISHED: Parsing XML Feed Format file.'
+        @@logger.info 'STARTED: Parsing XML Feed Format file...'
+        xml_doc = Nokogiri::Slop(gz.read)
 
-      ## Unlock access to this method
+        @@data_feed = get_data(xml_doc)
+        @@logger.info 'FINISHED: Parsing XML Feed Format file.'
 
-      result
+      end
+
+      @@data_feed
     end
 
     private
@@ -48,9 +50,9 @@ class XmlParser
               data.properties.append(property) unless property.nil?
             end
           end
-
-          puts data.properties.count
         end
+
+        return data
       rescue => e
         @@logger.error e.message
         @@logger.error e.backtrace
