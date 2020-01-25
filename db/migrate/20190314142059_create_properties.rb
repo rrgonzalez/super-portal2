@@ -13,7 +13,7 @@ class CreateProperties < ActiveRecord::Migration[5.2]
       t.integer :parking_spaces
       t.references :property_type, null: false
       t.references :currency, null: false
-      t.references :user
+      t.references :user, null: false
       t.timestamps
     end
   end
