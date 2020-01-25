@@ -39,6 +39,7 @@ class XmlParser
         prop_types = CachePropertyTypes.do_cache
         currencies = CacheCurrencies.do_cache
         features = CacheFeatures.do_cache
+        users = CacheUsers.do_cache
 
         data = DataFeed.new
         xml_doc.easybroker.agencies.children.each do |agency|
@@ -90,7 +91,7 @@ class XmlParser
 
       set_features(it_prop, property, features)
 
-      set_user(it_prop, property, company)
+      set_user(it_prop, property, company, users)
 
       property
     end
@@ -186,23 +187,29 @@ class XmlParser
       end
     end
 
-    def set_user(it_prop, property, company)
+    def set_user(it_prop, property, company, users)
       return unless (defined? it_prop.agent) && (defined? it_prop.agent.email)
 
-      user = User.new
-      user.email = it_prop.agent.email.content
+      user = users[it_prop.agent.email.content]
 
-      it_prop.agent.children.each do |node|
-        if node.name == 'name'
-          # If would have more time I would split this node content
-          # to separate first_name from last_name
-          user.first_name = node.content
-          break
+      if user.nil?
+        user = User.new
+        user.email = it_prop.agent.email.content
+
+        it_prop.agent.children.each do |node|
+          if node.name == 'name'
+            # If would have more time I would split this node content
+            # to separate first_name from last_name
+            user.first_name = node.content
+            break
+          end
         end
-      end
 
-      user.company = company
-      user.phone = it_prop.agent.cell if defined? it_prop.agent.cell
+        user.company = company
+        user.phone = it_prop.agent.cell if defined? it_prop.agent.cell
+
+        users[user.email] = user
+      end
 
       property.user = user
     end
