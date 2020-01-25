@@ -88,10 +88,16 @@ class EasyBrokerSynchronizer
 
             unless new_prop.user.nil?
               new_prop.user = get_user(new_prop.user, users)
-              no_prop_users.delete(new_prop.user.email)
+              if new_prop.user
+                no_prop_users.delete(new_prop.user.email)
+              end
             end
 
-            new_prop.save
+            begin
+              new_prop.save
+            rescue
+              @@logger.warn "There was a problem saving #{new_prop}"
+            end
           end
         end
       end
@@ -210,7 +216,9 @@ class EasyBrokerSynchronizer
       # New User
       if curr_user.nil?
         user = get_user(new_user, users)
-
+        unless user
+          return false
+        end
         no_prop_users.delete(user.email)
         changing_fields[:user] = user
         return true
@@ -258,7 +266,7 @@ class EasyBrokerSynchronizer
 
       if (user.nil?)
         user = new_user.save
-        users[user.email] = user
+        users[new_user.email] = user
       end
       user
     end
