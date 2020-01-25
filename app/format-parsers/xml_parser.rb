@@ -47,7 +47,7 @@ class XmlParser
 
           ActiveRecord::Base.transaction do
             agency.properties.children.each do |it_prop|
-              property = get_property(it_prop, prop_types, currencies, features, company)
+              property = get_property(it_prop, prop_types, currencies, features, company, users)
               data.properties.append(property) unless property.nil?
             end
           end
@@ -63,7 +63,7 @@ class XmlParser
       end
     end
 
-    def get_property(it_prop, prop_types, currencies, features, company)
+    def get_property(it_prop, prop_types, currencies, features, company, users)
       property = Property.new
       property.published = true
       property.external_id = it_prop.id if defined? it_prop.id
