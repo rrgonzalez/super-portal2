@@ -56,3 +56,4 @@ Add any notes here about your design decisions or improvements you would have ma
 * xml_parser#complete? method isn't the least complex method you have seen in your life. 
 * There is not been specified a policy to follow during the synchronization process, regarding to the users consulting info during that time. Then, the default database concurrent read/write policy will be maintained.
 * format-parsers directory should go inside synchronizers. I tried to move it there but I got errors, I don't have the time to refactor.
+* If I would have more memory I would cached all db properties on EasyBrokerSynchronizer#do_sync method, so to make just one big read for all properties. I would need to test if I can do that with just 1Gb of memory, since I'm short of time I'll keep it simple and read one property at a time.
