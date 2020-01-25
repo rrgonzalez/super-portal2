@@ -42,13 +42,6 @@ You should deliver the project sharing a link to your fork. Keep in mind that th
 
 ## Notes
 
-Add any notes here about your design decisions or improvements you would have made if you had more time. You also might want to consider the following questions for inspiration
-
-* Are there any performance issues with your code or things that you could easily speed up?
-* Are there any areas of your code that you think isn't that "clean"?
-* Could your code easily be refactored to allow a new feed format from another source?
-* If you weren't able to finish what were you able to complete and were you happy with your progress given the time constraints?
-
 * If a property doesn't have all the required fields in the xml I just ignore it. An incomplete property doesn't stop the whole sync process. Completes properties will be taken into account.
 * The XML_URL variable indicates the uri of the xml format feed. It should be setted on the correspondent config/environments/ file.
 * The xml_parser#get_data method could be cleaned. That being said, it's xml parsing it will be ugly anyway. 
@@ -58,3 +51,5 @@ Add any notes here about your design decisions or improvements you would have ma
 * If I would have more memory I would cached all db properties on EasyBrokerSynchronizer#do_sync method, so to make just one big read for all properties. I would need to test if I can do that with just 1Gb of memory, since I'm short of time I'll keep it simple and read one property at a time.
 * There is not been specified a policy to follow during the synchronization process, regarding to the users consulting info during that time. I would like to lock all access to database while the synchronization process is on execution, to avoid inconsistent reads, however this is not implemented.
 * If I would have more time, I would try to parse the xml by fragments so to don't keep the whole file at memory since this could break the task, however due to time restriction this is not implemented.
+* I run out of time, but I could cache images to search faster before destroy the ones that would cause duplicate urls
+* get_user method could be improved a lot but I run out of time
