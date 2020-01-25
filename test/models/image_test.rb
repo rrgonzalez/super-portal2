@@ -10,13 +10,6 @@ class ImageTest < ActiveSupport::TestCase
     img2.url = 'http://images.com/image2'
     refute img2.save
 
-    img2.url = 'http://images.com/image1'
-    img2.order = 55
-    refute img2.save
-
-    img2.url = 'http://images.com/image2'
-    refute img2.save
-
     img2.property = properties(:simpson_house)
     assert img2.save
   end
@@ -28,7 +21,6 @@ class ImageTest < ActiveSupport::TestCase
     img.url = 'http://images.com/image1'
     refute img.valid?
 
-    img.url = nil
     img.order = 55
     refute img.valid?
 
